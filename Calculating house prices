@@ -1,0 +1,106 @@
+# Question 1: Find the number of months it takes to pay the down payment for a new house given your annual salary, total cost of the house and the portion of salary you want to save.
+
+#Inputs
+annual_salary = int(input('Enter your annual salary: '))
+total_cost = int(input('Enter the cost of your dream home: '))
+portion_saved = float(input('Enter the percent of your salary to save, as a decimal: '))
+ 
+#variables given or calculated 
+portion_down_payment = 0.25 * int(total_cost)
+saving_rate = 0.04
+monthly_salary = ((annual_salary)/12)
+
+#setting up counters
+current_savings = 0
+number_of_months = 0
+
+while current_savings <= portion_down_payment:
+  number_of_months += 1
+  current_savings +=  ((current_savings * saving_rate)/12) + (portion_saved *(monthly_salary))
+
+print('Number of months:',number_of_months) #Output
+
+#Question 2: Find the number of months it takes to pay the down payment for a new house given your annual salary, total cost of the house and the portion of salary you want to save.
+This code also accounts for a semi-annual raise.
+
+#Inputs
+total_cost = int(input('Enter the cost of your dream home: '))
+annual_salary = int(input('Enter your annual salary: '))
+portion_saved = float(input('Enter the percent of your salary to save, as a decimal: '))
+semi_annual_raise = float(input('Enter the semi-annual raise, as a decimal: '))
+
+#variables given or calculated 
+portion_down_payment = 0.25 * int(total_cost)
+monthly_salary = ((annual_salary)/12)
+saving_rate = 0.04
+salary = annual_salary 
+
+#setting up counters
+current_savings = 0
+number_of_months = 0
+
+while current_savings <= portion_down_payment:
+  monthly_salary = (salary/12)
+  
+  if number_of_months % 6 == 0 and number_of_months != 0:
+    salary += (semi_annual_raise)*(salary)
+    current_savings +=  ((current_savings * saving_rate)/12) + (portion_saved * monthly_salary)
+    number_of_months += 1
+  
+  else:
+    current_savings +=  ((current_savings * saving_rate)/12) + (portion_saved * monthly_salary)
+    number_of_months += 1
+
+print('Number of months:', number_of_months) #Output
+
+#Questions 3: Code to find the best savings rate for a 1000000$ house using bisection search.
+
+#Input
+annual_salary = int(input('Enter your annual salary: '))
+
+#variables given or calculated
+total_cost = 1000000
+semi_annual_raise = .07
+down_payment = 0.25 * int(total_cost)
+saving_rate = 0.04
+salary = annual_salary
+
+#Counter
+current_savings = 0
+number_of_guesses = 0
+
+#Guess parameter set
+low = 0
+high = 1
+portion_saved = ((low + high) / 2)
+
+while abs(down_payment - current_savings) >= 100:
+  salary = annual_salary
+  current_savings = 0
+
+  for month in range(0, 36):
+    monthly_salary = ((salary)/12) #Where you nest certain parameters is important to get the right calculations
+
+    if month % 6 == 0 and month != 0:
+      salary += (semi_annual_raise)*(salary)
+      current_savings +=  ((current_savings * saving_rate)/12) + (portion_saved * monthly_salary)
+      
+    else:
+      current_savings +=  ((current_savings * saving_rate)/12) + (portion_saved * monthly_salary)
+
+  if current_savings >= down_payment:
+    high = portion_saved
+  
+  elif current_savings < down_payment:
+    low = portion_saved
+  
+  if portion_saved == 1.0:
+    print('It is not possible to pay the down payment in three years.')
+    break
+      
+  portion_saved = ((low + high) / 2)
+  number_of_guesses += 1
+
+#Output
+print('Best savings rate:', portion_saved)
+print('Steps in bisection search:', number_of_guesses)
