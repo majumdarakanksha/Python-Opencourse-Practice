@@ -1,3 +1,5 @@
+import math
+
 # Question 1: Find the number of months it takes to pay the down payment for a new house given your annual salary, total cost of the house and the portion of salary you want to save.
 
 #Inputs
